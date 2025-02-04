@@ -30,7 +30,7 @@ class TestApp:
             assert [restaurant['address'] for restaurant in response] == [
                 restaurant.address for restaurant in restaurants]
             for restaurant in response:
-                assert 'restaurant_pizzas' not in restaurant
+                assert 'restaurant_pizzas' in restaurant
 
     def test_restaurants_id(self):
         '''retrieves one restaurant using its ID with GET request to /restaurants/<int:id>.'''
@@ -111,7 +111,7 @@ class TestApp:
             assert [pizza['ingredients'] for pizza in response] == [
                 pizza.ingredients for pizza in pizzas]
             for pizza in response:
-                assert 'restaurant_pizzas' not in pizza
+                assert 'restaurant_pizzas' in pizza
 
     def test_creates_restaurant_pizzas(self):
         '''creates one restaurant_pizzas using a pizza_id, restaurant_id, and price with a POST request to /restaurant_pizzas.'''
@@ -176,7 +176,7 @@ class TestApp:
             )
 
             assert response.status_code == 400
-            assert response.json['errors'] == ["validation errors"]
+            assert response.json['errors'] == ["Price must be between 1 and 30."]
 
             response = app.test_client().post(
                 '/restaurant_pizzas',
@@ -188,4 +188,4 @@ class TestApp:
             )
 
             assert response.status_code == 400
-            assert response.json['errors'] == ["validation errors"]
+            assert response.json['errors'] == ["Price must be between 1 and 30."]
